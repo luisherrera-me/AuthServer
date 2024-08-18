@@ -25,8 +25,32 @@ Lista de software y herramientas, incluyendo versiones, que necesitas para insta
 
 Para empezar a utilizar el proyecto, es fundamental definir dos variables de entorno cruciales para su correcto funcionamiento. La primera variable especifica la ruta y las credenciales de MongoDB, mientras que la segunda define la clave secreta utilizada para la generación de JWT. A continuación, se detalla la configuración de MongoDB y la clave secreta necesaria.
 
+
+### ruta de inicio de sesión
 ```bash
-# paso 1
+http://127.0.0.1:8080/api/v1/auth/sign_in
+```
+### JSON
+```json
+{
+    "emailAddress": "luisda99@gmail.com",
+    "password": "12345678"
+}
+```
+
+### Ruta de registro
+```bash
+http://127.0.0.1:8080/api/v1/auth/sign_up
+```
+### JSON
+```json
+{
+    "name": "Tu nombre",
+    "lastName": "Tu Apellido",
+    "phone": "+57000000000",
+    "emailAddress": "tu@email.com",
+    "password": "TuPassword"
+}
 ```
 
 Y así sucesivamente...
