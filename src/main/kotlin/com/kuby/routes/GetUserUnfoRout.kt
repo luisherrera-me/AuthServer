@@ -10,7 +10,10 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.lang.Exception
 
-fun Route.userRoute(app: Application, userDataSource: UserDataSource) {
+fun Route.userRoute(
+    app: Application,
+    userDataSource: UserDataSource
+) {
 
     authenticate("another-auth") {
         get("/{id}") {

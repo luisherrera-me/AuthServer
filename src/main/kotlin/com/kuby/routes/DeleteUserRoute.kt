@@ -10,29 +10,30 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.deleteUserRoute (
-    jwtService: JwtService,
+    app: Application,
     userDataSource: UserDataSource
 ){
     authenticate("another-auth"){
-        get("/{id}"){
+        delete("/{id}"){
             val id: String = call.parameters["id"]
-                ?: return@get call.respond(HttpStatusCode.BadRequest)
+                ?: return@delete call.respond(
+                    status = HttpStatusCode.NotFound,
+                    message = "credenciales nulas"
+                )
 
             try {
-                val foundUser = userDataSource.getUserInfoById(id)
-                    ?: return@get call.respond(HttpStatusCode.NotFound)
-
                 val principalID = extractPrincipalUsername(call)
-                if (foundUser.id != principalID) {
+                if (id != principalID) {
                     call.respond(HttpStatusCode.Unauthorized)
                 } else {
-                    call.respond(
-                        status = HttpStatusCode.OK,
-                        message = foundUser
-                    )
+                    userDataSource.deleteUser(id)
+                    call.respond(HttpStatusCode.OK)
                 }
             }catch (_: Exception){
-                call.respond(HttpStatusCode.InternalServerError)
+                call.respond(
+                    status = HttpStatusCode.InternalServerError,
+                    message = "credenciales no validad"
+                )
             }
         }
     }

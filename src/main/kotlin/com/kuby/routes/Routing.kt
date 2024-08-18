@@ -10,5 +10,18 @@ import org.koin.java.KoinJavaComponent
 fun Application.configureRouting(
     jwtService: JwtService,
 ) {
+    routing {
+        val userDataSource: UserDataSource by KoinJavaComponent.inject(UserDataSource::class.java)
 
+        route(EndPoint.Auth.path) {
+            signUpRoute(jwtService, userDataSource)
+            signInRoute(jwtService, userDataSource)
+        }
+
+        route(EndPoint.DataUser.path) {
+            userRoute(application,userDataSource)
+            updateUserRoute(application,userDataSource)
+            deleteUserRoute(application,userDataSource)
+        }
+    }
 }
