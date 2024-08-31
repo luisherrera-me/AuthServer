@@ -20,7 +20,6 @@ fun Route.deleteUserRoute (
                     status = HttpStatusCode.NotFound,
                     message = "credenciales nulas"
                 )
-
             try {
                 val principalID = extractPrincipalUsername(call)
                 if (id != principalID) {
