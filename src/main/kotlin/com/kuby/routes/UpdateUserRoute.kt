@@ -1,9 +1,11 @@
 package com.kuby.routes
 
 import com.kuby.domain.model.ApiResponse
+import com.kuby.domain.model.ApiResponseError
 import com.kuby.domain.model.EndPoint
 import com.kuby.domain.model.User
 import com.kuby.domain.repository.UserDataSource
+import com.kuby.util.LocalDateTimeSerializer
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -12,8 +14,10 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.util.pipeline.*
+import kotlinx.serialization.Serializable
 import java.lang.Exception
 import java.time.LocalDateTime
+import java.util.*
 
 fun Route.updateUserRoute(app: Application, userDataSource: UserDataSource) {
 
@@ -41,6 +45,8 @@ fun Route.updateUserRoute(app: Application, userDataSource: UserDataSource) {
     }
 }
 
+
+
 private suspend fun PipelineContext<Unit, ApplicationCall>.updateUserInfo(
     app: Application,
     userId: String,
@@ -56,25 +62,29 @@ private suspend fun PipelineContext<Unit, ApplicationCall>.updateUserInfo(
         )
 
         if (response){
-            app.log.info("USER SUCCESSFULLY UPDATE")
             call.respond(
-                message = ApiResponse(
-
+                message = ApiResponseError(
+                    statusCode = 200,
+                    message = "USER SUCCESSFULLY UPDATE"
                 ),
                 status = HttpStatusCode.OK
             )
         } else {
-            app.log.info("ERROR UPDATING THE USER")
             call.respond(
-                message = ApiResponse(),
+                message = ApiResponseError(
+                    statusCode = 400,
+                    message = "ERROR UPDATING THE USER"
+                ),
                 status = HttpStatusCode.BadRequest
             )
         }
 
     } else {
-        app.log.info("ERROR UPDATING THE USER")
         call.respond(
-            message = ApiResponse(),
+            message = ApiResponseError(
+                statusCode = 400,
+                message = "ERROR UPDATING THE USER"
+            ),
             status = HttpStatusCode.BadRequest
         )
     }

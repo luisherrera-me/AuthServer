@@ -1,12 +1,10 @@
 package com.kuby.data.repository
 
 import com.kuby.domain.model.User
+import com.kuby.domain.model.UserUpdate
 import com.kuby.domain.repository.UserDataSource
-import org.litote.kmongo.combine
+import org.litote.kmongo.*
 import org.litote.kmongo.coroutine.CoroutineDatabase
-import org.litote.kmongo.eq
-import org.litote.kmongo.regex
-import org.litote.kmongo.setValue
 import java.time.LocalDateTime
 
 class UserDataSourceImpl(
@@ -28,11 +26,9 @@ class UserDataSourceImpl(
         val existingUser = users.findOne(filter = User::emailAddress eq user.emailAddress)
         println("Existing user: $existingUser")
         return if (existingUser == null){
-            // Insertar el nuevo usuario si no existe previamente
             val result = users.insertOne(document = user)
             result.wasAcknowledged()
         } else{
-            // Usuario ya existe, retornar false
             false
         }
     }
@@ -48,9 +44,9 @@ class UserDataSourceImpl(
         profilePhoto: String
     ): Boolean {
         val updates = combine(
-            setValue(User::name, name),
-            setValue(User::updatedAt, LocalDateTime.now()),
-            setValue(User::profilePhoto, profilePhoto)
+            setValue(UserUpdate::name, name),
+            setValue(UserUpdate::updatedAt, updatedAt.toString()),
+            setValue(UserUpdate::profilePhoto, profilePhoto)
         )
         return users.updateOne(
             filter = User::id eq id,

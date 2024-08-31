@@ -47,7 +47,7 @@ class JwtService (
     fun customValidator(
         credential: JWTCredential,
     ): JWTPrincipal? {
-        val emailAddress: String? = extractemailAddress(credential)
+        val emailAddress: String? = extractEmailAddress(credential)
         val foundUser: User? = emailAddress?.let{ userId ->
             runBlocking {
                 userDataSource.getUserInfoById(userId)
@@ -70,6 +70,6 @@ class JwtService (
     private fun getConfigProperty(path: String) =
         application.environment.config.property(path).getString()
 
-    private fun extractemailAddress(credential: JWTCredential): String? =
+    private fun extractEmailAddress(credential: JWTCredential): String? =
         credential.payload.getClaim("UserId").asString()
 }

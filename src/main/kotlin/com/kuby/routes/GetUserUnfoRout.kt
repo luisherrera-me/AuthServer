@@ -10,7 +10,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.lang.Exception
 
-fun Route.userRoute(
+fun Route.getUserRoute(
     app: Application,
     userDataSource: UserDataSource
 ) {
@@ -19,11 +19,9 @@ fun Route.userRoute(
         get("/{id}") {
             val id: String = call.parameters["id"]
                 ?: return@get call.respond(HttpStatusCode.BadRequest)
-
             try {
                 val foundUser = userDataSource.getUserInfoById(id)
                     ?: return@get call.respond(HttpStatusCode.NotFound)
-
                 val principalID = extractPrincipalUsername(call)
                 if (foundUser.id != principalID) {
                     call.respond(HttpStatusCode.Unauthorized)

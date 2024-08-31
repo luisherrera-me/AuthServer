@@ -3,7 +3,7 @@ package com.kuby
 import com.kuby.plugins.*
 import com.kuby.service.JwtService
 import io.ktor.server.application.*
-import com.kuby.routes.configureRouting
+import com.kuby.plugins.configureRouting
 
 
 fun main(args: Array<String>) {
