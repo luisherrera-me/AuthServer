@@ -13,3 +13,10 @@ data class UserUpdate(
     val updatedAt: String?= null,
     val profilePhoto: String? = null
 )
+
+//Google User Update
+@Serializable
+data class GoogleUserUpdate(
+    val firstName: String,
+    val lastName: String
+)

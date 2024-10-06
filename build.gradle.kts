@@ -51,4 +51,9 @@ dependencies {
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-ktor:$koinVersion")
     implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
+
+
+    //GOOGLE AUTH
+    implementation("com.google.api-client:google-api-client:1.33.2")
+
 }

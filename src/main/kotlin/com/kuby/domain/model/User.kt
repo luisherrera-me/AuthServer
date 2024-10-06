@@ -19,3 +19,13 @@ data class User(
     val password: String? = null,
     val profilePhoto: String? = null
 )
+
+//Google Auth User
+@Serializable
+data class GoogleUser (
+    val id: String,
+    val name: String,
+    val emailAddress: String,
+    val profilePhoto: String
+
+)
