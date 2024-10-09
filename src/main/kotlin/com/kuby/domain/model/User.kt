@@ -11,18 +11,19 @@ data class User(
     val lastName: String? = null,
     val phone: String? = null,
     @Serializable(with = LocalDateTimeSerializer::class)
-    val createdAt: LocalDateTime?= null,
+    val createdAt: LocalDateTime? = null,
     @Serializable(with = LocalDateTimeSerializer::class)
-    val updatedAt: LocalDateTime?= null,
-    val notificationToken: String ?= null,
+    val updatedAt: LocalDateTime? = null,
+    val notificationToken: String? = null,
     val emailAddress: String? = null,
     val password: String? = null,
-    val profilePhoto: String? = null
+    val profilePhoto: String? = null,
+    val token: String? = null
 )
 
 //Google Auth User
 @Serializable
-data class GoogleUser (
+data class GoogleUser(
     val id: String,
     val name: String,
     val emailAddress: String,

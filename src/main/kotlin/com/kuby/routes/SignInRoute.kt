@@ -1,9 +1,6 @@
 package com.kuby.routes
 
-import com.kuby.domain.model.ApiResponse
-import com.kuby.domain.model.ApiResponseError
-import com.kuby.domain.model.EndPoint
-import com.kuby.domain.model.LoginRequest
+import com.kuby.domain.model.*
 import com.kuby.domain.repository.UserDataSource
 import com.kuby.service.JwtService
 import io.ktor.http.*
@@ -24,8 +21,13 @@ fun Route.signInRoute(
             token?.let {
                 call.respond(
                     status = HttpStatusCode.OK,
-                    message = ApiResponse(
-                        user = foundUser,
+                    message = User(
+                        id = foundUser.id,  // Include user ID
+                        name = foundUser.name,  // Include user name
+                        lastName = foundUser.lastName,  // Include last name if needed
+                        phone = foundUser.phone,  // Include phone if needed
+                        createdAt = foundUser.createdAt,  // Include creation date
+                        updatedAt = foundUser.updatedAt,  // Include update date
                         token = token
 
                     )
